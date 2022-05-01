@@ -14,10 +14,11 @@ const App: FC = () => {
   const [appReady] = useState<boolean>(true);
   const context = useContext(AppContext);
 
-  // useEffect(() => {
+  // React.useEffect(() => {
   // * IT WILL USE IF APP REQUIRED FETCH DATA BEFORE RENDER CONTAINER
   // ? FOR SOME CASE THAT APP NEED TOKEN BEFORE RENDER
   // ! setAppReady(true);
+  // context.setLoading(true, 'fetching country..');
   // }, []);
 
   // * MEMOIZE ROUTER CAN HELP INCREASE INDEX PERFORMANCE APP
@@ -40,7 +41,14 @@ const App: FC = () => {
     <>
       <LoadingGeneral {...context.loadingState} />
       <ErrorGeneral {...context.errorState} />
-      {renderRouter}
+      <BrowserRouter>
+        <Routes>
+          {APP_ROUTER.map((item: IRoute) => (
+            <Route {...item} element={<item.element />} />
+          ))}
+          <Route path="*" element={<p>404 Page</p>} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };

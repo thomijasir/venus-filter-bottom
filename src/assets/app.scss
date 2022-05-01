@@ -9,6 +9,8 @@ body {
   font-family: $font-base;
 }
 .safe-area {
-  padding: 16px;
-  box-sizing: border-box;
+  @include mGrid() {
+    padding: 16px;
+    box-sizing: border-box;
+  }
 }

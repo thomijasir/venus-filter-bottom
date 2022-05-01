@@ -8,7 +8,7 @@ export interface IAppContext {
 }
 
 // INITIAL STATE
-export const initialState: IAppContext = {
+export const initialState: any = {
   loadingState: {
     isLoading: false,
     text: 'Loading...',

@@ -1,0 +1,71 @@
+@import '../../assets//style/mixin';
+@import '../../assets/style/colors';
+@import '../../assets//style/var';
+.button {
+  border-width: 1px;
+  border-style: solid;
+  padding: 8px 16px;
+  border-radius: 0.05rem;
+  outline: 0;
+  background: $white;
+  font-family: $font-second;
+  font-size: 16px;
+  text-decoration: none;
+  border: 1px solid $shadow-blue;
+  @include xSmall() {
+    padding: 0.06rem;
+  }
+  &.uppercase {
+    text-transform: uppercase;
+  }
+  &.primary {
+    color: $white;
+    background: $shadow-blue;
+    &.inactive {
+      color: $white;
+      background: $very-light-two;
+      border: 1px solid $very-light-two;
+    }
+  }
+  &.invert {
+    color: $shadow-blue;
+    background: $white;
+  }
+  &.outline {
+    color: $shadow-blue;
+    &.inactive {
+      color: $very-light-two;
+      border: 1px solid $very-light-two;
+    }
+  }
+  &.full {
+    width: 100%;
+  }
+  &.no-margin {
+    margin: 0rem;
+  }
+  &.bold {
+    font-weight: 600;
+  }
+  &.small {
+    font-size: 0.12rem;
+  }
+  &.big {
+    font-size: 16px;
+    font-weight: 600;
+    min-height: 0.45rem;
+    @include xSmall() {
+      font-size: 0.15;
+    }
+  }
+  &.nowrap {
+    white-space: nowrap;
+  }
+  &.denom {
+    font-size: 0.25rem;
+    width: 0.37rem;
+    height: 0.2rem;
+    padding-bottom: 0.35rem;
+    padding-top: 0;
+  }
+}

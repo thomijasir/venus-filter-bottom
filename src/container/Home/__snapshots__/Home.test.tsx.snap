@@ -5,28 +5,187 @@ exports[`HomePage Container Snap Test render() renders the component 1`] = `
   className="home-page safe-area"
 >
   <div
-    className="container-fluid"
+    className="app-area"
   >
     <div
-      className="row"
+      className="search-country"
     >
       <div
-        className="col-lg-12"
+        className="search-input"
       >
-        <img
-          alt="react-logo"
-          className="rotate"
-          src="react.svg"
+        <div
+          className="icon"
+        >
+          <img
+            alt="Search Icon"
+            src="search-icon.svg"
+          />
+        </div>
+        <input
+          onChange={[Function]}
+          onClose={[Function]}
+          placeholder="Search your country here.."
+          type="text"
+          value=""
         />
-        <h1>
-          React Boilerplate
-        </h1>
-        <p>
-          Project Template with the latest react hook, simple clean and no vulnerability package
-        </p>
-        <small>
-          React Template by Thomi Jasir
-        </small>
+        <div
+          className="close "
+          onClick={[Function]}
+        >
+          <img
+            alt="Seach Icon"
+            src="close-icon.svg"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="list-view-country"
+    >
+      <div
+        className="list-view"
+      >
+        <div
+          className="list-empty"
+        >
+          <img
+            alt="empty"
+            src="not_found.png"
+          />
+          <h2>
+            Nothing..
+          </h2>
+          <p>
+            Hemm, seemingly what you looking for is not available.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="bottom-sheet-filter"
+    >
+      <div
+        className="bottom-sheet-layer-background "
+        onClick={[Function]}
+      />
+      <div
+        className="bottom-sheet-filter-content"
+      >
+        <div
+          className="head-b-sheet"
+        >
+          Sort Alphabet
+        </div>
+        <div
+          className="center-b-sheet"
+        >
+          <div
+            className="custom-radio-group"
+          >
+            <div
+              className="radio-item-group"
+            >
+              <input
+                checked={true}
+                id="asc"
+                name="radio-group"
+                onChange={[Function]}
+                type="radio"
+                value="asc"
+              />
+              <label
+                htmlFor="asc"
+              >
+                Ascending
+              </label>
+            </div>
+            <div
+              className="radio-item-group"
+            >
+              <input
+                checked={false}
+                id="dsc"
+                name="radio-group"
+                onChange={[Function]}
+                type="radio"
+                value="desc"
+              />
+              <label
+                htmlFor="dsc"
+              >
+                Descending
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          className="bottom-b-sheet"
+        >
+          <div
+            className="column"
+          >
+            <button
+              className="button outline full bold uppercase"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              RESET
+            </button>
+          </div>
+          <div
+            className="column"
+          >
+            <button
+              className="button primary full bold uppercase"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              SHOW
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        className="button-filter"
+      >
+        <div
+          className="left-filter"
+          onClick={[Function]}
+        >
+          <div
+            className="icon-left"
+          >
+            <img
+              alt="SHORT ICON"
+              src="sorting-icon.svg"
+            />
+          </div>
+          <div
+            className="text-left"
+          >
+            SHORT
+          </div>
+        </div>
+        <div
+          className="right-filter"
+          onClick={[Function]}
+        >
+          <div
+            className="icon-right"
+          >
+            <img
+              alt="FILTER ICON"
+              src="filter-select-icon.svg"
+            />
+          </div>
+          <div
+            className="text-right"
+          >
+            FILTER
+          </div>
+        </div>
       </div>
     </div>
   </div>
