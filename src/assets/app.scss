@@ -7,6 +7,22 @@
 
 body {
   font-family: $font-base;
+  .indicator-device {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+    .top {
+      height: 16px;
+      background-color: #3a3a3a;
+    }
+    .middle {
+      padding: 16px;
+      background-color: #313131;
+      color: white;
+    }
+  }
 }
 .safe-area {
   @include mGrid() {

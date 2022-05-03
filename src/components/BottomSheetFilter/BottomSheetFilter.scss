@@ -20,7 +20,6 @@
     left: 0;
     opacity: 0;
     z-index: 2;
-    transition: ease 0.3s;
     @include mGrid() {
       position: absolute;
       height: inherit;
@@ -42,6 +41,7 @@
     border-top-right-radius: 6px;
     padding: 16px;
     box-sizing: border-box;
+    transition: ease 0.3s;
     .custom-radio-group {
       margin: 16px 0;
       .radio-item-group {

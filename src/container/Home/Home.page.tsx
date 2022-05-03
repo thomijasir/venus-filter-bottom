@@ -1,6 +1,8 @@
 import React, { FC, useState, useEffect, useContext, useCallback } from 'react';
 import lUniqueId from 'lodash/uniqueId';
 import lGet from 'lodash/get';
+import lOrderBy from 'lodash/orderBy';
+import lIsEqual from 'lodash/isEqual';
 import { ArrayStringSearch } from '../../utils/Helper';
 import { AppContext } from '../../store/AppProvider';
 import useClientRestCountry from '../../hooks/useClientRestCountry';
@@ -9,8 +11,8 @@ import ListView, {
 } from '../../components/ListView/ListView.comp';
 import SearchInput from '../../components/SearchInput/SearchInput.comp';
 import BottomSheetFilter from '../../components/BottomSheetFilter/BottomSheetFilter.comp';
+import useStateCallback from '../../hooks/useStateCallback';
 import './Home.scss';
-import Person from './Person';
 
 export interface IProps {}
 
@@ -20,27 +22,28 @@ const Home: FC<IProps> = () => {
   const [listData, setListData] = useState<IListViewData[]>([]);
   const [listDataFilter, setListDataFilter] =
     useState<IListViewData[]>(listData);
+  const [filterApply, setFilterApply] = useStateCallback([]);
 
-  // useEffect(() => {
-  //   context.setLoading(true, 'fetching country..');
-  //   clientCountry
-  //     .getAllCountry()
-  //     .then((result: any) => {
-  //       const countryList = mapCountryToListView(result);
-  //       setListData(countryList);
-  //       setListDataFilter(countryList);
-  //     })
-  //     .catch(() => {
-  //       context.setError(
-  //         true,
-  //         'Failure, fetch',
-  //         'Something wrong with api connection',
-  //       );
-  //     })
-  //     .finally(() => {
-  //       context.setLoading(false, 'fetching country..');
-  //     });
-  // }, []);
+  useEffect(() => {
+    context.setLoading(true, 'fetching country..');
+    clientCountry
+      .getAllCountry()
+      .then((result: any) => {
+        setListData(result);
+        const countryList = mapCountryToListView(result);
+        setListDataFilter(countryList);
+      })
+      .catch(() => {
+        context.setError(
+          true,
+          'Failure, fetch',
+          'Something wrong with api connection',
+        );
+      })
+      .finally(() => {
+        context.setLoading(false, 'fetching country..');
+      });
+  }, []);
 
   const mapCountryToListView = useCallback((data: any[]) => {
     const remapData = data.map(
@@ -56,23 +59,81 @@ const Home: FC<IProps> = () => {
 
   const handleSearchChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setListDataFilter(ArrayStringSearch('text', e.target.value, listData));
+      setListDataFilter(
+        ArrayStringSearch(
+          'text',
+          e.target.value,
+          mapCountryToListView(listData),
+        ),
+      );
     },
     [setListDataFilter, listData],
   );
 
   const handleOnClearSearch = useCallback(() => {
-    setListDataFilter(listData);
+    setListDataFilter(mapCountryToListView(listData));
   }, [listData]);
+
+  const handleOrderBy = (filter: any) => {
+    setListDataFilter(lOrderBy(listDataFilter, 'text', filter.alphabetShort));
+  };
 
   const handleOnTapListItem = useCallback((item: IListViewData) => {
     console.log('ON TAP OBJECT: ', item);
   }, []);
 
-  const handleFilterChange = (e: any) => {
-    console.log('GET RETURN: ', e);
-  };
+  const handleListCountryByRegion =
+    (regions: string[], filterData: 'asc' | 'desc') => () => {
+      const promiseList: any = [];
+      if (regions.length) {
+        // Make Promise List
+        regions.forEach((data: string) => {
+          promiseList.push(clientCountry.getCountryByRegional(data));
+        });
+      } else {
+        promiseList.push(clientCountry.getAllCountry());
+      }
+      Promise.all(promiseList)
+        .then((res: any) => {
+          const result = res.flat();
+          setListData(result);
+          setListDataFilter(
+            lOrderBy(mapCountryToListView(result), 'text', filterData),
+          );
+        })
+        .catch(() => {
+          context.setError(
+            true,
+            'Filtering country',
+            'Something wrong when filter country by region',
+          );
+        });
+    };
 
+  const handleFilterChange = useCallback(
+    (e: any) => {
+      const getFilter = Object.entries(e.region)
+        .filter((data: any) => data[1])
+        .map((data: any) => {
+          return data[0];
+        });
+
+      // IF ITS EQUAL DONT CALL API FILTER
+      if (lIsEqual(getFilter, filterApply)) {
+        handleOrderBy(e);
+      } else {
+        setFilterApply(
+          getFilter,
+          handleListCountryByRegion(getFilter, e.alphabetShort),
+        );
+      }
+    },
+    [filterApply, setFilterApply],
+  );
+
+  if (context.loadingState.isLoading) {
+    return null;
+  }
   return (
     <div className="home-page safe-area">
       <div className="app-area">
@@ -83,13 +144,10 @@ const Home: FC<IProps> = () => {
             placeholder="Search your country here.."
           />
         </div>
-        {!context.loadingState.isLoading && (
-          <div className="list-view-country">
-            <ListView list={listDataFilter} onTapItem={handleOnTapListItem} />
-          </div>
-        )}
+        <div className="list-view-country">
+          <ListView list={listDataFilter} onTapItem={handleOnTapListItem} />
+        </div>
         <BottomSheetFilter onFilterChange={handleFilterChange} />
-        {/* <Person onHandleMessage={handleFilterChange} /> */}
       </div>
     </div>
   );

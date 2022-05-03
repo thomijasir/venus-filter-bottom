@@ -34,7 +34,4 @@ const Button: FC<IProps> = (props) => {
   );
 };
 
-export default React.memo(
-  Button,
-  (p, n) => JSON.stringify(p) === JSON.stringify(n),
-);
+export default Button;

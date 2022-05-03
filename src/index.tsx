@@ -39,16 +39,13 @@ const App: FC = () => {
 
   return (
     <>
+      <div className="indicator-device">
+        <div className="top"></div>
+        <div className="middle">Country App</div>
+      </div>
       <LoadingGeneral {...context.loadingState} />
       <ErrorGeneral {...context.errorState} />
-      <BrowserRouter>
-        <Routes>
-          {APP_ROUTER.map((item: IRoute) => (
-            <Route {...item} element={<item.element />} />
-          ))}
-          <Route path="*" element={<p>404 Page</p>} />
-        </Routes>
-      </BrowserRouter>
+      {renderRouter}
     </>
   );
 };

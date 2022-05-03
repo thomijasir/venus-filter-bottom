@@ -93,7 +93,37 @@ const useClientRestCountry = () => {
     }
   };
 
-  return { searchCountry, searchCountryID, getAllCountry, loading, error };
+  const getCountryByRegional = async (
+    region: string,
+    config?: AxiosRequestConfig,
+  ) => {
+    setLoading(true);
+    try {
+      const responses = await client.get(
+        `regionalbloc/${region}?fields=name,capital,flags,alpha2Code`,
+        config,
+      );
+      return Promise.resolve(responses.data);
+    } catch (err: any) {
+      setError({
+        errorState: true,
+        errorStatus: err.response.status,
+        message: err.message,
+      });
+      return Promise.reject(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    searchCountry,
+    searchCountryID,
+    getAllCountry,
+    getCountryByRegional,
+    loading,
+    error,
+  };
 };
 
 export default useClientRestCountry;

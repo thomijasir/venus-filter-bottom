@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  useState,
-  useMemo,
-  ChangeEvent,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { FC, useState, ChangeEvent, useMemo } from 'react';
 import FILTER_ICON from '../../assets/icons/filter-select-icon.svg';
 import SORTING_ICON from '../../assets/icons/sorting-icon.svg';
 import ButtonComp from '../Button/Button.comp';
@@ -23,63 +16,65 @@ const BottomSheetFilter: FC<IBottomSheetFilterProps> = ({ onFilterChange }) => {
   const [showFilterType, setShowFilterType] = useState<string | null>(null);
   const [formValue, setFormValue] = useState({
     alphabetShort: 'asc',
-    continent: {
-      asia: false,
-      africa: false,
-      europe: false,
-      northAmerica: false,
-      southAmerica: false,
-      australia: false,
-      antarctica: false,
+    region: {
+      eu: false,
+      efta: false,
+      caricom: false,
+      pa: false,
+      au: false,
+      asean: false,
     },
   });
-  const handleOnChangeShortAlphabet = (e: any) => {
+
+  const handleOnChangeShortAlphabet = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValue((prevState) => ({
       ...prevState,
       alphabetShort: e.target.value,
     }));
   };
+
   const handleOnResetShortAlphabet = () => {
     setFormValue((prevState) => ({
       ...prevState,
       alphabetShort: 'asc',
     }));
   };
+
   const handleOnResetFilterRegion = () => {
     setFormValue((prevState) => ({
       ...prevState,
-      continent: {
-        asia: false,
-        africa: false,
-        europe: false,
-        northAmerica: false,
-        southAmerica: false,
-        australia: false,
-        antarctica: false,
+      region: {
+        eu: false,
+        efta: false,
+        caricom: false,
+        pa: false,
+        au: false,
+        asean: false,
       },
     }));
   };
+
   const handleOnChangeFilterRegion = (e: ChangeEvent<HTMLInputElement>) => {
-    const getContinent = e.target.value;
+    const getRegion = e.target.value;
     setFormValue((prevState: any) => ({
       ...prevState,
-      continent: {
-        ...prevState.continent,
-        [getContinent]: !prevState.continent[getContinent],
+      region: {
+        ...prevState.region,
+        [getRegion]: !prevState.region[getRegion],
       },
     }));
   };
 
   const handleShowButton = () => {
     onFilterChange(formValue);
-    // setShowFilterType(null);
+    setShowFilterType(null);
   };
 
   const handleBackgroundLayerClicked = () => {
     setShowFilterType(null);
   };
 
-  const shortAlphabet = () => {
+  const shortAlphabet = useMemo(() => {
     return (
       <div className="bottom-sheet-filter-content">
         <div className="head-b-sheet">Sort Alphabet</div>
@@ -129,121 +124,119 @@ const BottomSheetFilter: FC<IBottomSheetFilterProps> = ({ onFilterChange }) => {
         </div>
       </div>
     );
-  };
+  }, [formValue.alphabetShort]);
 
-  const filterRegionArea = () => (
-    <div className="bottom-sheet-filter-content">
-      <div className="head-b-sheet">Filter By Continent</div>
-      <div className="center-b-sheet">
-        <div className="check-box-list">
-          <label className="check-box-group">
-            Asia
-            <input
-              type="checkbox"
-              value="asia"
-              checked={formValue.continent.asia}
-              onChange={handleOnChangeFilterRegion}
-            />
-            <span className="checkmark"></span>
-          </label>
-          <label className="check-box-group">
-            Africa
-            <input
-              type="checkbox"
-              value="africa"
-              checked={formValue.continent.africa}
-              onChange={handleOnChangeFilterRegion}
-            />
-            <span className="checkmark"></span>
-          </label>
-          <label className="check-box-group">
-            Europe
-            <input
-              type="checkbox"
-              value="europe"
-              checked={formValue.continent.europe}
-              onChange={handleOnChangeFilterRegion}
-            />
-            <span className="checkmark"></span>
-          </label>
-          <label className="check-box-group">
-            North America
-            <input
-              type="checkbox"
-              value="northAmerica"
-              checked={formValue.continent.northAmerica}
-              onChange={handleOnChangeFilterRegion}
-            />
-            <span className="checkmark"></span>
-          </label>
-          <label className="check-box-group">
-            South America
-            <input
-              type="checkbox"
-              value="southAmerica"
-              checked={formValue.continent.southAmerica}
-              onChange={handleOnChangeFilterRegion}
-            />
-            <span className="checkmark"></span>
-          </label>
-          <label className="check-box-group">
-            Australia/Oceania
-            <input
-              type="checkbox"
-              value="australia"
-              checked={formValue.continent.australia}
-              onChange={handleOnChangeFilterRegion}
-            />
-            <span className="checkmark"></span>
-          </label>
-          <label className="check-box-group">
-            Antarctica
-            <input
-              type="checkbox"
-              value="antarctica"
-              checked={formValue.continent.antarctica}
-              onChange={handleOnChangeFilterRegion}
-            />
-            <span className="checkmark"></span>
-          </label>
+  const filterRegionArea = useMemo(
+    () => (
+      <div className="bottom-sheet-filter-content">
+        <div className="head-b-sheet">Filter By Regional Block Area</div>
+        <div className="center-b-sheet">
+          <div className="check-box-list">
+            <label className="check-box-group">
+              EU (European Union)
+              <input
+                type="checkbox"
+                value="eu"
+                checked={formValue.region.eu}
+                onChange={handleOnChangeFilterRegion}
+              />
+              <span className="checkmark"></span>
+            </label>
+            <label className="check-box-group">
+              EFTA (European Free Trade Association)
+              <input
+                type="checkbox"
+                value="efta"
+                checked={formValue.region.efta}
+                onChange={handleOnChangeFilterRegion}
+              />
+              <span className="checkmark"></span>
+            </label>
+            <label className="check-box-group">
+              CARICOM (Caribbean Community)
+              <input
+                type="checkbox"
+                value="caricom"
+                checked={formValue.region.caricom}
+                onChange={handleOnChangeFilterRegion}
+              />
+              <span className="checkmark"></span>
+            </label>
+            <label className="check-box-group">
+              PA (Pacific Alliance)
+              <input
+                type="checkbox"
+                value="pa"
+                checked={formValue.region.pa}
+                onChange={handleOnChangeFilterRegion}
+              />
+              <span className="checkmark"></span>
+            </label>
+            <label className="check-box-group">
+              AU (African Union)
+              <input
+                type="checkbox"
+                value="au"
+                checked={formValue.region.au}
+                onChange={handleOnChangeFilterRegion}
+              />
+              <span className="checkmark"></span>
+            </label>
+            <label className="check-box-group">
+              ASEAN (Association of Southeast Asian Nations)
+              <input
+                type="checkbox"
+                value="asean"
+                checked={formValue.region.asean}
+                onChange={handleOnChangeFilterRegion}
+              />
+              <span className="checkmark"></span>
+            </label>
+          </div>
+        </div>
+        <div className="bottom-b-sheet">
+          <div className="column">
+            <ButtonComp
+              classStyle="outline full bold uppercase"
+              onClick={handleOnResetFilterRegion}
+            >
+              RESET
+            </ButtonComp>
+          </div>
+          <div className="column">
+            <ButtonComp
+              classStyle="primary full bold uppercase"
+              onClick={handleShowButton}
+            >
+              SHOW
+            </ButtonComp>
+          </div>
         </div>
       </div>
-      <div className="bottom-b-sheet">
-        <div className="column">
-          <ButtonComp
-            classStyle="outline full bold uppercase"
-            onClick={handleOnResetFilterRegion}
-          >
-            RESET
-          </ButtonComp>
-        </div>
-        <div className="column">
-          <ButtonComp classStyle="primary full bold uppercase">SHOW</ButtonComp>
-        </div>
-      </div>
-    </div>
+    ),
+    [formValue.region],
   );
 
-  const showFilter = () => {
+  const showFilter = useMemo(() => {
     switch (showFilterType) {
       case 'SHORT':
-        return shortAlphabet();
+        return shortAlphabet;
       case 'FILTER':
-        return filterRegionArea();
+        return filterRegionArea;
       default:
         return null;
     }
-  };
+  }, [showFilterType, formValue]);
 
   return (
     <div className="bottom-sheet-filter">
       <div
         className={`bottom-sheet-layer-background ${
-          showFilter() !== null ? 'on' : ''
+          showFilter !== null ? 'on' : ''
         }`}
         onClick={handleBackgroundLayerClicked}
       ></div>
-      {shortAlphabet()}
+      {showFilter}
       <div className="button-filter">
         <div className="left-filter" onClick={() => setShowFilterType('SHORT')}>
           <div className="icon-left">
@@ -267,4 +260,4 @@ const BottomSheetFilter: FC<IBottomSheetFilterProps> = ({ onFilterChange }) => {
 
 BottomSheetFilter.displayName = BottomSheetFilterNamespace;
 BottomSheetFilter.defaultProps = BottomSheetFilterDefaultProps;
-export default BottomSheetFilter;
+export default React.memo(BottomSheetFilter);
