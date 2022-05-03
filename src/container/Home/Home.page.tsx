@@ -128,7 +128,7 @@ const Home: FC<IProps> = () => {
         );
       }
     },
-    [filterApply, setFilterApply],
+    [filterApply, listDataFilter, setFilterApply],
   );
 
   if (context.loadingState.isLoading) {
