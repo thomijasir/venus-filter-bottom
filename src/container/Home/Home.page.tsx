@@ -26,6 +26,7 @@ const Home: FC<IProps> = () => {
 
   useEffect(() => {
     context.setLoading(true, 'fetching country..');
+    document.body.style.backgroundColor = 'white';
     clientCountry
       .getAllCountry()
       .then((result: any) => {
@@ -137,6 +138,10 @@ const Home: FC<IProps> = () => {
   return (
     <div className="home-page safe-area">
       <div className="app-area">
+        <div className="indicator-device">
+          <div className="top"></div>
+          <div className="middle">Country App</div>
+        </div>
         <div className="search-country">
           <SearchInput
             onClose={handleOnClearSearch}
@@ -145,7 +150,11 @@ const Home: FC<IProps> = () => {
           />
         </div>
         <div className="list-view-country">
-          <ListView list={listDataFilter} onTapItem={handleOnTapListItem} />
+          <ListView
+            list={listDataFilter}
+            onTapItem={handleOnTapListItem}
+            loading={clientCountry.loading}
+          />
         </div>
         <BottomSheetFilter onFilterChange={handleFilterChange} />
       </div>

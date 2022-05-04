@@ -39,10 +39,6 @@ const App: FC = () => {
 
   return (
     <>
-      <div className="indicator-device">
-        <div className="top"></div>
-        <div className="middle">Country App</div>
-      </div>
       <LoadingGeneral {...context.loadingState} />
       <ErrorGeneral {...context.errorState} />
       {renderRouter}

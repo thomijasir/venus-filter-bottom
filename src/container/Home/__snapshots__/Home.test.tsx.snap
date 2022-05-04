@@ -8,6 +8,18 @@ exports[`HomePage Container Snap Test render() renders the component 1`] = `
     className="app-area"
   >
     <div
+      className="indicator-device"
+    >
+      <div
+        className="top"
+      />
+      <div
+        className="middle"
+      >
+        Country App
+      </div>
+    </div>
+    <div
       className="search-country"
     >
       <div
