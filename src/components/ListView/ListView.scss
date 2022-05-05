@@ -66,6 +66,7 @@
     padding: 12px 0;
     box-sizing: border-box;
     border-bottom: 1px solid $very-light-grey;
+    cursor: pointer;
     &:last-child {
       border-bottom: none;
     }

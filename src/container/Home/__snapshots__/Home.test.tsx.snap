@@ -73,51 +73,51 @@ exports[`HomePage Container Snap Test render() renders the component 1`] = `
         </div>
       </div>
     </div>
+  </div>
+  <div
+    className="bottom-sheet-filter"
+  >
     <div
-      className="bottom-sheet-filter"
+      className="bottom-sheet-layer-background "
+      onClick={[Function]}
+    />
+    <div
+      className="button-filter"
     >
       <div
-        className="bottom-sheet-layer-background "
+        className="left-filter"
         onClick={[Function]}
-      />
-      <div
-        className="button-filter"
       >
         <div
-          className="left-filter"
-          onClick={[Function]}
+          className="icon-left"
         >
-          <div
-            className="icon-left"
-          >
-            <img
-              alt="SHORT ICON"
-              src="sorting-icon.svg"
-            />
-          </div>
-          <div
-            className="text-left"
-          >
-            SHORT
-          </div>
+          <img
+            alt="SHORT ICON"
+            src="sorting-icon.svg"
+          />
         </div>
         <div
-          className="right-filter"
-          onClick={[Function]}
+          className="text-left"
         >
-          <div
-            className="icon-right"
-          >
-            <img
-              alt="FILTER ICON"
-              src="filter-select-icon.svg"
-            />
-          </div>
-          <div
-            className="text-right"
-          >
-            FILTER
-          </div>
+          SHORT
+        </div>
+      </div>
+      <div
+        className="right-filter"
+        onClick={[Function]}
+      >
+        <div
+          className="icon-right"
+        >
+          <img
+            alt="FILTER ICON"
+            src="filter-select-icon.svg"
+          />
+        </div>
+        <div
+          className="text-right"
+        >
+          FILTER
         </div>
       </div>
     </div>

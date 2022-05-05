@@ -4,7 +4,7 @@
 .bottom-sheet-filter {
   position: fixed;
   width: 100%;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
   z-index: 10;
   height: inherit;
@@ -33,7 +33,7 @@
     position: absolute;
     width: 100%;
     background: white;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     z-index: 6;
     min-height: 200px;
@@ -192,7 +192,7 @@
   .button-filter {
     position: fixed;
     display: flex;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     z-index: 5;
     background: white;
