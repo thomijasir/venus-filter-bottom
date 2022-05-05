@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useId } from 'react';
+import React, { FC } from 'react';
 import CURIOUS_FINDING from '../../assets/images/not_found.png';
 import ARROW_ICON from '../../assets/icons/arrow-icon.svg';
 import LOADER_ICON from '../../assets/icons/spinner-icon.svg';
@@ -58,4 +58,4 @@ const ListView: FC<IProps> = (props) => {
   );
 };
 
-export default ListView;
+export default React.memo(ListView);

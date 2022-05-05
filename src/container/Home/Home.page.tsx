@@ -10,7 +10,9 @@ import ListView, {
   ListViewData as IListViewData,
 } from '../../components/ListView/ListView.comp';
 import SearchInput from '../../components/SearchInput/SearchInput.comp';
-import BottomSheetFilter from '../../components/BottomSheetFilter/BottomSheetFilter.comp';
+import BottomSheetFilter, {
+  IFormBottomSheet,
+} from '../../components/BottomSheetFilter/BottomSheetFilter.comp';
 import Button from '../../components/Button/Button.comp';
 import useStateCallback from '../../hooks/useStateCallback';
 import ModalComp from '../../components/Modal/Modal.comp';
@@ -79,7 +81,7 @@ const Home: FC<IProps> = () => {
     setListDataFilter(mapCountryToListView(listData));
   }, [listData]);
 
-  const handleOrderBy = (filter: any) => {
+  const handleOrderBy = (filter: IFormBottomSheet) => {
     setListDataFilter(lOrderBy(listDataFilter, 'text', filter.alphabetShort));
   };
 
@@ -96,7 +98,7 @@ const Home: FC<IProps> = () => {
 
   const handleListCountryByRegion =
     (regions: string[], filterData: 'asc' | 'desc') => () => {
-      const promiseList: any = [];
+      const promiseList: Promise<ICountry>[] = [];
       if (regions.length) {
         // Make Promise List
         regions.forEach((data: string) => {
@@ -127,7 +129,7 @@ const Home: FC<IProps> = () => {
   }, [showModal, setShowModal]);
 
   const handleFilterChange = useCallback(
-    (e: any) => {
+    (e: IFormBottomSheet) => {
       const getFilter = Object.entries(e.region)
         .filter((data: any) => data[1])
         .map((data: any) => {

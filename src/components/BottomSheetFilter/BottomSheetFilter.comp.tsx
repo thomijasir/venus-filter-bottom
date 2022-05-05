@@ -4,6 +4,18 @@ import SORTING_ICON from '../../assets/icons/sorting-icon.svg';
 import ButtonComp from '../Button/Button.comp';
 import './BottomSheetFilter.scss';
 
+export interface IFormBottomSheet {
+  alphabetShort: 'asc' | 'desc';
+  region: {
+    eu: boolean;
+    efta: boolean;
+    caricom: boolean;
+    pa: boolean;
+    au: boolean;
+    asean: boolean;
+  };
+}
+
 export interface IBottomSheetFilterProps {
   onFilterChange: (e: any) => void;
 }
@@ -76,7 +88,7 @@ const BottomSheetFilter: FC<IBottomSheetFilterProps> = ({ onFilterChange }) => {
 
   const shortAlphabet = useMemo(() => {
     return (
-      <div className="bottom-sheet-filter-content">
+      <div key={`${selectShowFilter}`} className="bottom-sheet-filter-content">
         <div className="head-b-sheet">Sort Alphabet</div>
         <div className="center-b-sheet">
           <div className="custom-radio-group">
@@ -128,7 +140,7 @@ const BottomSheetFilter: FC<IBottomSheetFilterProps> = ({ onFilterChange }) => {
 
   const filterRegionArea = useMemo(
     () => (
-      <div className="bottom-sheet-filter-content">
+      <div key={`${selectShowFilter}`} className="bottom-sheet-filter-content">
         <div className="head-b-sheet">Filter By Regional Block Area</div>
         <div className="center-b-sheet">
           <div className="check-box-list">
@@ -217,7 +229,7 @@ const BottomSheetFilter: FC<IBottomSheetFilterProps> = ({ onFilterChange }) => {
     [formValue.region],
   );
 
-  const showFilter = useMemo(() => {
+  const selectShowFilter = useMemo(() => {
     switch (showFilterType) {
       case 'SHORT':
         return shortAlphabet;
@@ -228,15 +240,24 @@ const BottomSheetFilter: FC<IBottomSheetFilterProps> = ({ onFilterChange }) => {
     }
   }, [showFilterType, formValue]);
 
+  const renderFilter = useMemo(() => {
+    if (selectShowFilter !== null)
+      return (
+        <>
+          <div
+            key={`LAYER-${selectShowFilter}`}
+            className="bottom-sheet-layer-background"
+            onClick={handleBackgroundLayerClicked}
+          ></div>
+          {selectShowFilter}
+        </>
+      );
+    return selectShowFilter;
+  }, [selectShowFilter]);
+
   return (
     <div className="bottom-sheet-filter">
-      <div
-        className={`bottom-sheet-layer-background ${
-          showFilter !== null ? 'on' : ''
-        }`}
-        onClick={handleBackgroundLayerClicked}
-      ></div>
-      {showFilter}
+      {renderFilter}
       <div className="button-filter">
         <div className="left-filter" onClick={() => setShowFilterType('SHORT')}>
           <div className="icon-left">

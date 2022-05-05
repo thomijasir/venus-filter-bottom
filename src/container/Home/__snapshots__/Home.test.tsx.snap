@@ -78,10 +78,6 @@ exports[`HomePage Container Snap Test render() renders the component 1`] = `
     className="bottom-sheet-filter"
   >
     <div
-      className="bottom-sheet-layer-background "
-      onClick={[Function]}
-    />
-    <div
       className="button-filter"
     >
       <div
