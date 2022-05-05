@@ -1,0 +1,19 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(359deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
