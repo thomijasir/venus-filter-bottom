@@ -1,0 +1,232 @@
+@import '../../assets/style/colors';
+@import '../../assets//style/var';
+@import '../../assets/style/mixin';
+.bottom-sheet-filter {
+  position: fixed;
+  width: 100%;
+  bottom: -1px;
+  left: 0;
+  z-index: 10;
+  height: inherit;
+  @include mGrid() {
+    position: absolute;
+  }
+  .bottom-sheet-layer-background {
+    position: fixed;
+    width: 100%;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 2;
+    @include mGrid() {
+      position: absolute;
+      height: inherit;
+    }
+    &.on {
+      height: 100vh;
+      opacity: 1;
+    }
+  }
+  .bottom-sheet-filter-content {
+    position: absolute;
+    width: 100%;
+    background: white;
+    bottom: -1px;
+    left: 0;
+    z-index: 6;
+    min-height: 200px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding: 16px;
+    box-sizing: border-box;
+    transition: ease 0.3s;
+    .custom-radio-group {
+      margin: 16px 0;
+      .radio-item-group {
+        margin-bottom: 16px;
+      }
+      [type="radio"]:checked,
+      [type="radio"]:not(:checked) {
+        position: absolute;
+        left: -9999px;
+      }
+      
+      [type="radio"]:checked+label,
+      [type="radio"]:not(:checked)+label {
+        position: relative;
+        padding-left: 28px;
+        cursor: pointer;
+        line-height: 20px;
+        display: inline-block;
+        color: #666;
+      }
+      
+      [type="radio"]:checked+label:before,
+      [type="radio"]:not(:checked)+label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 18px;
+        height: 18px;
+        border: 1px solid #ddd;
+        border-radius: 100%;
+        background: #fff;
+      }
+      
+      [type="radio"]:checked+label:after,
+      [type="radio"]:not(:checked)+label:after {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background: $shadow-blue;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        border-radius: 100%;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+      }
+      
+      [type="radio"]:not(:checked)+label:after {
+        opacity: 0;
+        -webkit-transform: scale(0);
+        transform: scale(0);
+      }
+      
+      [type="radio"]:checked+label:after {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+    }
+    .check-box-list {
+      padding-top: 16px;
+      .check-box-group {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
+      /* Hide the browser's default checkbox */
+      .check-box-group input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+      
+      /* Create a custom checkbox */
+      .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #eee;
+      }
+      
+      /* On mouse-over, add a grey background color */
+      .check-box-group:hover input~.checkmark {
+        background-color: #ccc;
+      }
+      
+      /* When the checkbox is checked, add a blue background */
+      .check-box-group input:checked~.checkmark {
+        background-color: #2196F3;
+      }
+      
+      /* Create the checkmark/indicator (hidden when not checked) */
+      .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+      
+      /* Show the checkmark when checked */
+      .check-box-group input:checked~.checkmark:after {
+        display: block;
+      }
+      
+      /* Style the checkmark/indicator */
+      .check-box-group .checkmark:after {
+        left: 7px;
+        top: 3px;
+        width: 4px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+    }
+    .bottom-b-sheet {
+      padding-top:8px;
+      border-top: 1px solid #E3E3E3;
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      .column {
+        flex: 0 0 50%;
+        box-sizing: border-box;
+        &:first-child {
+          padding-right: 6px;
+        }
+        &:last-child {
+          padding-left: 6px;
+        }
+      }
+    }
+  }
+  .button-filter {
+    position: fixed;
+    display: flex;
+    bottom: -1px;
+    left: 0;
+    z-index: 5;
+    background: white;
+    width: 100%;
+    height: 50px;
+    box-shadow: 0px -2px 12px -2px rgba(0, 0, 0, 0.16);
+    justify-content: center;
+    align-items: center;
+    color: $shadow-blue;
+    font-weight: bold;
+    @include mGrid() {
+      position: absolute;
+      overflow: hidden;
+    }
+    .left-filter {
+      display: flex;
+      flex: 1 0 50%;
+      justify-content: center;
+      border-right: 2px solid #E3E3E3;
+      cursor: pointer;
+      .icon-left {
+        padding-right: 4px;
+        box-sizing: border-box;
+      }
+    }
+    .right-filter {
+      display: flex;
+      flex: 1 0 50%;
+      justify-content: center;
+      cursor: pointer;
+      .icon-right {
+        padding-right: 4px;
+        box-sizing: border-box;
+      }
+    }
+  }
+}

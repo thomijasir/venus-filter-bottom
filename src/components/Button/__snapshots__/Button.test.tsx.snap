@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error General Component Snap Test render() renders the component 1`] = `
+<button
+  className="button primary"
+  disabled={false}
+  id="btn"
+  onClick={[Function]}
+  type="button"
+>
+  Sample
+</button>
+`;

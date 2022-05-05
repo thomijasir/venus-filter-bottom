@@ -1,21 +1,45 @@
+@import '../../assets//style/mixin';
+@import '../../assets/style//colors';
 .home-page {
-  h1 {
-    font-family: 'Courier New', Courier, monospace;
-  }
   line-height: 1.5;
-  height: 100vh;
   display: flex;
-  align-items: center;
-  text-align: center;
-  .rotate {
-    animation: rotation 3s infinite linear;
-  }
-  @keyframes rotation {
-    from {
-      transform: rotate(359deg);
+  justify-content: center;
+  box-sizing: border-box;
+  padding-top: 64px;
+  height: auto;
+  .app-area {
+    position: relative;
+    padding: 16px;
+    width: 100%;
+    @include mGrid() {
+      width: 375px;
+      height: 670px;
+      margin: auto;
+      box-sizing: border-box;
+      border: 2px solid $black-two;
+      border-radius: 6px;
+      overflow: auto;
     }
-    to {
-      transform: rotate(0deg);
+    .search-country {
+      margin-bottom: 8px;
+    }
+    .list-view-country {
+      margin-top: 8px;
+      .list-empty {
+        margin-top: 95px;
+      }
+    }
+   
+  }
+  .country-info {
+    margin-bottom: 16px;
+    .country-flag {
+      width: 100%;
+      height: 100%;
+      img {
+        width: inherit;
+        height: inherit;
+      }
     }
   }
 }

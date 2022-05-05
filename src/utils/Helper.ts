@@ -11,6 +11,11 @@ export const getLang = (): 'en' | 'id' => {
   }
 };
 
+export const stringMatch = (str: string, find: string) => {
+  const strRegExPattern = `\\b${find}\\b`;
+  return str.match(new RegExp(strRegExPattern, 'g'));
+};
+
 export const getParamURL = (urlKey: string) => {
   const rawUrl = window.location.search;
   const result = rawUrl
