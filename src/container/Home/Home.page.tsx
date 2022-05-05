@@ -11,7 +11,10 @@ import ListView, {
 } from '../../components/ListView/ListView.comp';
 import SearchInput from '../../components/SearchInput/SearchInput.comp';
 import BottomSheetFilter from '../../components/BottomSheetFilter/BottomSheetFilter.comp';
+import Button from '../../components/Button/Button.comp';
 import useStateCallback from '../../hooks/useStateCallback';
+import ModalComp from '../../components/Modal/Modal.comp';
+import { ICountry } from '../../interfaces/General';
 import './Home.scss';
 
 export interface IProps {}
@@ -19,17 +22,18 @@ export interface IProps {}
 const Home: FC<IProps> = () => {
   const context = useContext(AppContext);
   const clientCountry = useClientRestCountry();
-  const [listData, setListData] = useState<IListViewData[]>([]);
-  const [listDataFilter, setListDataFilter] =
-    useState<IListViewData[]>(listData);
+  const [listData, setListData] = useState<ICountry[]>([]);
+  const [listDataFilter, setListDataFilter] = useState<IListViewData[]>([]);
   const [filterApply, setFilterApply] = useStateCallback([]);
+  const [selectedCountry, setSelectedCountry] = useState<ICountry>();
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
-    context.setLoading(true, 'fetching country..');
     document.body.style.backgroundColor = 'white';
+    context.setLoading(true, 'fetching country..');
     clientCountry
       .getAllCountry()
-      .then((result: any) => {
+      .then((result: ICountry[]) => {
         setListData(result);
         const countryList = mapCountryToListView(result);
         setListDataFilter(countryList);
@@ -46,9 +50,9 @@ const Home: FC<IProps> = () => {
       });
   }, []);
 
-  const mapCountryToListView = useCallback((data: any[]) => {
+  const mapCountryToListView = useCallback((data: ICountry[]) => {
     const remapData = data.map(
-      (item: any) =>
+      (item: ICountry) =>
         ({
           id: lGet(item, 'alpha2Code', lUniqueId()),
           icon: item.flags.svg,
@@ -79,9 +83,16 @@ const Home: FC<IProps> = () => {
     setListDataFilter(lOrderBy(listDataFilter, 'text', filter.alphabetShort));
   };
 
-  const handleOnTapListItem = useCallback((item: IListViewData) => {
-    console.log('ON TAP OBJECT: ', item);
-  }, []);
+  const handleOnTapListItem = useCallback(
+    (item: IListViewData) => {
+      const countryDetail = listData.find(
+        (data: ICountry) => item.id === data.alpha2Code,
+      );
+      setSelectedCountry(countryDetail);
+      setShowModal(true);
+    },
+    [listData, selectedCountry],
+  );
 
   const handleListCountryByRegion =
     (regions: string[], filterData: 'asc' | 'desc') => () => {
@@ -95,7 +106,7 @@ const Home: FC<IProps> = () => {
         promiseList.push(clientCountry.getAllCountry());
       }
       Promise.all(promiseList)
-        .then((res: any) => {
+        .then((res: ICountry[]) => {
           const result = res.flat();
           setListData(result);
           setListDataFilter(
@@ -111,6 +122,10 @@ const Home: FC<IProps> = () => {
         });
     };
 
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false);
+  }, [showModal, setShowModal]);
+
   const handleFilterChange = useCallback(
     (e: any) => {
       const getFilter = Object.entries(e.region)
@@ -118,7 +133,6 @@ const Home: FC<IProps> = () => {
         .map((data: any) => {
           return data[0];
         });
-
       // IF ITS EQUAL DONT CALL API FILTER
       if (lIsEqual(getFilter, filterApply)) {
         handleOrderBy(e);
@@ -130,6 +144,34 @@ const Home: FC<IProps> = () => {
       }
     },
     [filterApply, listDataFilter, setFilterApply],
+  );
+
+  const renderModal = React.useMemo(
+    () => (
+      <ModalComp show={showModal}>
+        <div className="modal-content">
+          <div className="country-info">
+            <div className="country-flag">
+              <img
+                src={selectedCountry?.flags.svg}
+                alt={selectedCountry?.name}
+              />
+            </div>
+            The name of this country is <b>{selectedCountry?.name}</b> the
+            capital city is <b>{selectedCountry?.capital || 'Unknown'}</b>, this
+            country have international code that is{' '}
+            <b>{selectedCountry?.alpha2Code}</b>.
+          </div>
+          <Button
+            classStyle="primary full uppercase bold"
+            onClick={handleCloseModal}
+          >
+            Close
+          </Button>
+        </div>
+      </ModalComp>
+    ),
+    [selectedCountry, showModal],
   );
 
   if (context.loadingState.isLoading) {
@@ -156,8 +198,9 @@ const Home: FC<IProps> = () => {
             loading={clientCountry.loading}
           />
         </div>
-        <BottomSheetFilter onFilterChange={handleFilterChange} />
       </div>
+      <BottomSheetFilter onFilterChange={handleFilterChange} />
+      {renderModal}
     </div>
   );
 };

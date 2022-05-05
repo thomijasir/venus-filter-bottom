@@ -11,6 +11,7 @@
   .phone-wrapper {
     display: flex;
     align-items: center;
+    transform: scale(0.9, 0.9);
     // PERSPECTIVE VIEW
     &.laydown {
       flex-direction: column;
@@ -56,7 +57,6 @@
         height: 100%;
       }
     }
-
     .phone-control {
       display: flex;
       transition: all 0.5s ease;
@@ -65,5 +65,4 @@
       gap: 6px;
     }
   }
-  
 }

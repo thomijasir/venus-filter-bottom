@@ -1,0 +1,43 @@
+@import '../../assets/style/colors';
+@import '../../assets//style/var';
+.modal-comp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 10;
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  &.fadeInModal {
+    animation: fadeIn 0.2s;
+  }
+  .layer-modal {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    z-index: 11;
+    height: inherit;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-wrapper {
+    border-radius: 8px;
+    background-color: white;
+    padding: 16px;
+    width: 230px;
+    height: auto;
+  }
+}
